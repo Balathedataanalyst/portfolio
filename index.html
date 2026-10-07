@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balajayan R — Data Analyst &amp; Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E1A;
+    --bg-elevated:#0E1526;
+    --surface:#131B32;
+    --surface-2:#1A2440;
+    --line:rgba(255,255,255,0.09);
+    --line-strong:rgba(255,255,255,0.16);
+    --text:#F2F0E8;
+    --text-dim:#B7BDCC;
+    --text-mute:#7C859C;
+    --accent:#22D3B8;
+    --accent-soft:rgba(34,211,184,0.14);
+    --teal:#0EA5A0;
+    --teal-soft:rgba(14,165,160,0.14);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(34,211,184,0.07), transparent 40%),
+      radial-gradient(circle at 85% 4%, rgba(14,165,160,0.06), transparent 45%);
+  }
+
+  ::selection{background:var(--accent);color:#0A0E1A;}
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,26,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1120px;
+    margin:0 auto;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav-mark .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 10px var(--accent);
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.05em;
+    color:var(--text-mute);
+  }
+  .nav-links a{transition:color .2s ease;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links span{color:var(--accent);}
+  @media (max-width:720px){ .nav-links{display:none;} }
+
+  /* ---------- eyebrow / stage label ---------- */
+  .stage{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--text-mute);
+    margin-bottom:18px;
+  }
+  .stage .num{ color:var(--accent); }
+  .stage::before{
+    content:'';
+    width:22px;height:1px;
+    background:var(--line-strong);
+  }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; letter-spacing:-0.01em; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:140px 0 80px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .hero-title{
+    font-size:clamp(2.4rem, 5.2vw, 4rem);
+    line-height:1.04;
+    margin-bottom:20px;
+  }
+  .hero-title .line2{ color:var(--text-mute); font-weight:500; }
+  .hero-sub{
+    font-size:1.08rem;
+    color:var(--text-dim);
+    max-width:46ch;
+    margin-bottom:32px;
+  }
+  .hero-sub b{ color:var(--text); font-weight:600; }
+
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px; }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.04em;
+    padding:13px 22px;
+    border-radius:3px;
+    border:1px solid var(--line-strong);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#04140F;
+    border-color:var(--accent);
+    font-weight:600;
+  }
+  .btn-primary:hover{ background:#4EE6CE; transform:translateY(-1px); }
+  .btn-ghost:hover{ border-color:var(--text-dim); color:var(--text); }
+
+  .hero-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  .hero-stats .stat{
+    padding:18px 18px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .hero-stats .stat:last-child{ border-right:none; }
+  .stat-num{
+    font-family:var(--font-mono);
+    font-size:1.5rem;
+    color:var(--accent);
+    display:block;
+  }
+  .stat-label{
+    font-size:12px;
+    color:var(--text-mute);
+    margin-top:4px;
+  }
+
+  /* ---------- 3D pipeline scene ---------- */
+  .scene-outer{
+    perspective:1400px;
+    height:480px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .scene{
+    position:relative;
+    width:100%;
+    height:420px;
+    transform-style:preserve-3d;
+    transform:rotateX(18deg) rotateY(-22deg);
+    transition:transform .15s ease-out;
+  }
+  .node{
+    position:absolute;
+    width:128px;
+    padding:14px 16px;
+    background:linear-gradient(155deg, var(--surface-2), var(--surface));
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+    transform-style:preserve-3d;
+  }
+  .node .n-icon{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--accent);
+    letter-spacing:0.06em;
+  }
+  .node .n-title{
+    font-family:var(--font-display);
+    font-size:14px;
+    margin-top:6px;
+    color:var(--text);
+  }
+  .node .n-sub{
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--text-mute);
+    margin-top:3px;
+  }
+  .node::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:8px;
+    background:linear-gradient(155deg, rgba(34,211,184,0.10), transparent 60%);
+    pointer-events:none;
+  }
+
+  .n1{ left:2%;  top:64%;  transform:translateZ(10px); }
+  .n2{ left:24%; top:30%;  transform:translateZ(60px); }
+  .n3{ left:47%; top:58%;  transform:translateZ(110px); }
+  .n4{ left:70%; top:20%;  transform:translateZ(160px); }
+  .n5{ left:64%; top:74%;  transform:translateZ(210px); border-color:var(--teal); }
+  .n5 .n-icon{ color:var(--teal); }
+
+  .scene svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; transform:translateZ(2px); }
+  .flow-path{
+    fill:none;
+    stroke:url(#flowGrad);
+    stroke-width:1.6;
+    stroke-dasharray:6 8;
+    animation:flow 2.2s linear infinite;
+    opacity:0.75;
+  }
+  @keyframes flow{ to{ stroke-dashoffset:-56; } }
+  .flow-pulse{
+    fill:var(--teal);
+    filter:drop-shadow(0 0 6px var(--teal)) drop-shadow(0 0 12px var(--accent));
+  }
+  @media (prefers-reduced-motion: reduce){
+    .flow-pulse animateMotion{ display:none; }
+  }
+
+  @media (max-width:900px){
+    .scene-outer{ height:340px; }
+    .node{ width:104px; padding:10px 12px; }
+    .node .n-title{ font-size:12px; }
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding:120px 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(1.7rem,3vw,2.3rem); margin-bottom:14px; }
+  .section-head p{ color:var(--text-dim); font-size:1rem; }
+
+  .divider{ border:none; border-top:1px solid var(--line); }
+
+  /* ---------- About ---------- */
+  .about-body{ display:grid; grid-template-columns:1.3fr 1fr; gap:64px; }
+  @media (max-width:820px){ .about-body{ grid-template-columns:1fr; } }
+  .about-body p{ color:var(--text-dim); margin-bottom:18px; font-size:1.02rem; }
+  .about-body p b{ color:var(--text); font-weight:600; }
+  .about-tags{ display:flex; flex-wrap:wrap; gap:9px; align-content:flex-start; }
+  .tag{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    padding:7px 12px;
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    color:var(--text-dim);
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  @media (max-width:820px){ .skill-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .skill-grid{ grid-template-columns:1fr; } }
+  .flip-hint{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-mute);
+    margin-bottom:16px;
+  }
+  .skill-card{
+    background:var(--bg-elevated);
+    height:190px;
+    perspective:1200px;
+  }
+  .skill-inner{
+    position:relative;
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .skill-card:hover .skill-inner,
+  .skill-card:focus-within .skill-inner{
+    transform:rotateY(180deg);
+  }
+  .skill-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    padding:28px 24px;
+    display:flex;
+    flex-direction:column;
+  }
+  .skill-front{
+    background:linear-gradient(155deg, var(--surface-2), var(--bg-elevated));
+    justify-content:space-between;
+  }
+  .skill-back{
+    background:var(--surface);
+    transform:rotateY(180deg);
+    justify-content:center;
+  }
+  .skill-face .sk-eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--accent);
+    letter-spacing:0.08em;
+    margin-bottom:10px;
+  }
+  .skill-face h3{ font-size:1.12rem; }
+  .sk-flip-icon{
+    align-self:flex-end;
+    font-family:var(--font-mono);
+    font-size:20px;
+    color:var(--text-mute);
+    opacity:0.6;
+  }
+  .skill-back ul{ list-style:none; color:var(--text-dim); font-size:13.5px; }
+  .skill-back li{ padding:3px 0; border-top:1px dashed var(--line); }
+  .skill-back li:first-child{ border-top:none; }
+  @media (prefers-reduced-motion: reduce){
+    .skill-inner{ transition:none; }
+  }
+
+  /* ---------- Experience timeline ---------- */
+  .timeline{ position:relative; padding-left:28px; }
+  .timeline::before{
+    content:'';
+    position:absolute; left:0; top:6px; bottom:6px;
+    width:1px;
+    background:linear-gradient(var(--accent), var(--teal));
+    opacity:0.5;
+  }
+  .job{
+    position:relative;
+    padding-bottom:56px;
+    perspective:1000px;
+  }
+  .job:last-child{ padding-bottom:0; }
+  .job::before{
+    content:'';
+    position:absolute;
+    left:-33px; top:6px;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--bg), 0 0 14px var(--accent);
+  }
+  .job-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:28px 30px;
+    transform-style:preserve-3d;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .job-card:hover{
+    border-color:var(--line-strong);
+    box-shadow:0 24px 50px -30px rgba(0,0,0,0.7);
+  }
+  .job-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:8px 20px;
+    margin-bottom:6px;
+  }
+  .job-role{ font-size:1.18rem; font-family:var(--font-display); }
+  .job-date{ font-family:var(--font-mono); font-size:12px; color:var(--accent); white-space:nowrap; }
+  .job-org{ color:var(--text-dim); font-size:14px; margin-bottom:16px; }
+  .job-org b{ color:var(--text-dim); font-weight:600; }
+  .job ul{ list-style:none; }
+  .job li{
+    position:relative;
+    padding-left:18px;
+    margin-bottom:10px;
+    color:var(--text-dim);
+    font-size:14.5px;
+  }
+  .job li::before{
+    content:'▸';
+    position:absolute; left:0; top:0;
+    color:var(--teal);
+    font-size:12px;
+  }
+  .job li b{ color:var(--text); font-weight:600; }
+
+  /* ---------- Projects ---------- */
+  .proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media (max-width:900px){ .proj-grid{ grid-template-columns:1fr; } }
+  .proj-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    transform-style:preserve-3d;
+    transition:transform .12s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .proj-card:hover{ border-color:var(--line-strong); box-shadow:0 30px 60px -30px rgba(0,0,0,0.75); }
+  .proj-metric{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono);
+    margin-bottom:16px;
+  }
+  .proj-metric .from{ color:var(--text-mute); font-size:13px; text-decoration:line-through; }
+  .proj-metric .arrow{ color:var(--accent); }
+  .proj-metric .to{ color:var(--teal); font-size:17px; font-weight:600; }
+  .proj-card h3{ font-size:1.05rem; margin-bottom:8px; }
+  .proj-tech{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--text-mute);
+    margin-bottom:14px;
+    letter-spacing:0.03em;
+  }
+  .proj-card p{ color:var(--text-dim); font-size:13.8px; }
+
+  /* ---------- Certs + Education ---------- */
+  .cred-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media (max-width:720px){ .cred-grid{ grid-template-columns:1fr; } }
+  .cred-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px;
+  }
+  .cred-card h3{ font-size:15px; margin-bottom:16px; color:var(--text-mute); font-family:var(--font-mono); font-weight:500; letter-spacing:0.04em; }
+  .cred-item{ padding:12px 0; border-top:1px solid var(--line); }
+  .cred-item:first-of-type{ border-top:none; padding-top:0; }
+  .cred-item .c-name{ font-family:var(--font-display); font-size:15px; }
+  .cred-item .c-meta{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-mute); margin-top:3px; }
+
+  /* ---------- Achievements ---------- */
+  .iso-chart{
+    perspective:1300px;
+    height:220px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    margin-bottom:40px;
+  }
+  .iso-plane{
+    display:flex;
+    align-items:flex-end;
+    gap:34px;
+    transform-style:preserve-3d;
+    transform:rotateX(58deg) rotateZ(-38deg);
+  }
+  .iso-bar{ position:relative; width:46px; height:46px; transform-style:preserve-3d; }
+  .iso-front, .iso-side, .iso-top{ position:absolute; }
+  .iso-front{
+    left:0; bottom:0; width:46px; height:var(--h);
+    transform-origin:bottom; transform:rotateX(-90deg);
+    background:linear-gradient(180deg, #6EF0DA, var(--accent));
+  }
+  .iso-side{
+    right:0; bottom:0; width:46px; height:var(--h);
+    transform-origin:bottom right; transform:rotateX(-90deg) rotateY(90deg);
+    background:linear-gradient(180deg, #0C8A85, #06504E);
+  }
+  .iso-top{
+    left:0; top:0; width:46px; height:46px;
+    transform:translateZ(var(--h));
+    background:linear-gradient(135deg, #9CF5E4, #6EF0DA);
+  }
+  .iso-teal .iso-front, .iso-front.iso-teal{ background:linear-gradient(180deg, #5FD9CE, var(--teal)); }
+  .iso-teal .iso-side, .iso-side.iso-teal{ background:linear-gradient(180deg, #0A7A76, #054947); }
+  .iso-teal .iso-top, .iso-top.iso-teal{ background:linear-gradient(135deg, #8FE8DD, #5FD9CE); }
+  @media (max-width:640px){ .iso-chart{ transform:scale(0.72); height:170px; } }
+
+  .ach-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  @media (max-width:820px){ .ach-grid{ grid-template-columns:1fr 1fr; } }
+  .ach-card{ background:var(--bg-elevated); padding:30px 22px; }
+  .ach-num{ font-family:var(--font-mono); font-size:2rem; color:var(--accent); display:block; margin-bottom:8px; }
+  .ach-desc{ color:var(--text-dim); font-size:13px; }
+
+  /* ---------- Contact / Footer ---------- */
+  .contact{
+    text-align:center;
+    padding:130px 0 90px;
+  }
+  .contact h2{ font-size:clamp(2rem,5vw,3.2rem); margin-bottom:18px; }
+  .contact p{ color:var(--text-dim); max-width:48ch; margin:0 auto 36px; }
+  .contact-links{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:24px; }
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 0;
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-mute);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .flow-path{ animation:none; }
+    .scene{ transition:none; }
+    *{ scroll-behavior:auto !important; }
+  }
+
+  :focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
+
+  #bg-net{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  body > *:not(#bg-net){ position:relative; z-index:1; }
+</style>
+</head>
+<body>
+
+<canvas id="bg-net"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="dot"></span>BALAJAYAN.R</div>
+    <div class="nav-links">
+      <a href="#about">About<span>_01</span></a>
+      <a href="#skills">Skills<span>_02</span></a>
+      <a href="#experience">Experience<span>_03</span></a>
+      <a href="#projects">Projects<span>_04</span></a>
+      <a href="#credentials">Credentials<span>_05</span></a>
+      <a href="#contact">Contact<span>_06</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="stage"><span class="num">STAGE 00</span> SOURCE</div>
+      <h1 class="hero-title">Balajayan R<br><span class="line2">turns raw data into running systems.</span></h1>
+      <p class="hero-sub">Data Analyst and Alteryx Designer with <b>3+ years</b> building ETL pipelines, automated reporting, and BI dashboards — currently engineering automation for Ford India's Engineering &amp; Development Centre.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#experience">View the pipeline ↓</a>
+        <a class="btn btn-ghost" href="mailto:balathedataanalyst@gmail.com">balathedataanalyst@gmail.com</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">500K+</span><span class="stat-label">records processed daily</span></div>
+        <div class="stat"><span class="stat-num">65%</span><span class="stat-label">manual effort cut at Ford EDC</span></div>
+        <div class="stat"><span class="stat-num">PL-300</span><span class="stat-label">certified Power BI analyst</span></div>
+      </div>
+    </div>
+
+    <div class="scene-outer">
+      <div class="scene" id="scene">
+        <svg viewBox="0 0 500 420" aria-hidden="true">
+          <defs>
+            <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22D3B8"/>
+              <stop offset="100%" stop-color="#0EA5A0"/>
+            </linearGradient>
+          </defs>
+          <path class="flow-path" d="M75,300 C140,260 150,180 190,155"/>
+          <path class="flow-path" d="M245,190 C300,160 320,130 355,95"/>
+          <path class="flow-path" d="M410,120 C420,180 400,260 350,300"/>
+          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.6s" repeatCount="indefinite" path="M75,300 C140,260 150,180 190,155"/></circle>
+          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.2s" begin="0.4s" repeatCount="indefinite" path="M245,190 C300,160 320,130 355,95"/></circle>
+          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.9s" begin="0.9s" repeatCount="indefinite" path="M410,120 C420,180 400,260 350,300"/></circle>
+        </svg>
+        <div class="node n1"><div class="n-icon">01 · INPUT</div><div class="n-title">Data Mart</div><div class="n-sub">SQL / Oracle DB</div></div>
+        <div class="node n2"><div class="n-icon">02 · BLEND</div><div class="n-title">Join &amp; Clean</div><div class="n-sub">Alteryx Designer</div></div>
+        <div class="node n3"><div class="n-icon">03 · SHAPE</div><div class="n-title">Summarize</div><div class="n-sub">Python · Pandas</div></div>
+        <div class="node n4"><div class="n-icon">04 · REPORT</div><div class="n-title">Auto-Dispatch</div><div class="n-sub">Mail Node · Power Automate</div></div>
+        <div class="node n5"><div class="n-icon">05 · OUTPUT</div><div class="n-title">Live Dashboard</div><div class="n-sub">Power BI · Tableau</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="stage"><span class="num">STAGE 01</span> INGEST</div>
+    <div class="about-body">
+      <div>
+        <p>I build the workflows that sit between messy raw data and the decisions people actually need to make. Most of that work happens in <b>Alteryx</b> — Input/Output, Blending, Join, Summarize, Reporting, and Batch Macro tools — turning inconsistent source files into structured, analytics-ready datasets on a schedule, without anyone touching a keyboard.</p>
+        <p>Right now I'm the automation engineer behind Ford India EDC's claims reporting: 15+ Alteryx workflows processing 500K+ records daily, dashboards tracking SLA compliance in real time, and Power Automate flows enforcing business rules across a claims platform built in Power Apps.</p>
+        <p>Before that, I built forecasting models and BI dashboards at TEKsystems, and cut my teeth writing Python ETL scripts as a developer intern. The throughline is the same: find the manual, repetitive, error-prone step, and replace it with something that runs itself correctly.</p>
+      </div>
+      <div class="about-tags">
+        <span class="tag">Alteryx Designer</span>
+        <span class="tag">Power BI · PL-300</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">SQL Server / MySQL</span>
+        <span class="tag">Python · Pandas · Scikit-learn</span>
+        <span class="tag">Power Automate</span>
+        <span class="tag">Power Apps</span>
+        <span class="tag">SharePoint</span>
+        <span class="tag">Azure / GCP</span>
+        <span class="tag">JIRA · Agile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="stage"><span class="num">STAGE 02</span> TRANSFORM</div>
+    <div class="section-head">
+      <h2>Tools I build pipelines with</h2>
+      <p>Grouped the way a real workflow uses them — from moving data in, to shaping it, to putting it in front of people.</p>
+    </div>
+    <p class="flip-hint">Hover / tap a card to flip it →</p>
+    <div class="skill-grid">
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">01 · ETL &amp; AUTOMATION</div>
+            <h3>Alteryx Designer</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>Input / Output tools</li>
+              <li>Blending &amp; Joins</li>
+              <li>Summarize &amp; Predictive</li>
+              <li>Batch Macros</li>
+              <li>Dynamic Replace</li>
+              <li>Workflow Scheduling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">02 · VISUALIZATION</div>
+            <h3>Dashboards &amp; BI</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>Power BI (PL-300)</li>
+              <li>Tableau</li>
+              <li>DAX</li>
+              <li>Advanced Excel</li>
+              <li>Custom KPI dashboards</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">03 · LANGUAGES &amp; QUERY</div>
+            <h3>SQL &amp; Python</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>MySQL / MS SQL Server</li>
+              <li>Pandas · NumPy</li>
+              <li>Scikit-learn</li>
+              <li>Matplotlib · Seaborn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">04 · PROCESS AUTOMATION</div>
+            <h3>Power Platform</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>Power Automate flows</li>
+              <li>Power Apps</li>
+              <li>Mail Node automation</li>
+              <li>SharePoint integration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">05 · DATA PIPELINES</div>
+            <h3>Data Engineering</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>Data wrangling &amp; profiling</li>
+              <li>Transformation logic</li>
+              <li>Python ETL scripts</li>
+              <li>Oracle DB</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card" tabindex="0">
+        <div class="skill-inner">
+          <div class="skill-face skill-front">
+            <div class="sk-eyebrow">06 · CLOUD &amp; DELIVERY</div>
+            <h3>Platforms &amp; Collaboration</h3>
+            <div class="sk-flip-icon">↻</div>
+          </div>
+          <div class="skill-face skill-back">
+            <ul>
+              <li>Microsoft Azure</li>
+              <li>Google Cloud</li>
+              <li>JIRA · Agile</li>
+              <li>Stakeholder reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="stage"><span class="num">STAGE 03</span> PROCESS</div>
+    <div class="section-head">
+      <h2>Experience</h2>
+      <p>Three roles, one pattern: find the manual process, automate it, measure the time it gave back.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="job">
+        <div class="job-card">
+          <div class="job-top"><span class="job-role">IT Automation Engineer / Data Analyst</span><span class="job-date">Oct 2025 — Present</span></div>
+          <div class="job-org">DSV Solutions · Client: <b>Ford India Engineering and Development Centre (EDC)</b></div>
+          <ul>
+            <li>Designed and deployed <b>15+ Alteryx workflows</b> transforming 500K+ raw records daily into analytics-ready formats, cutting manual data prep time by <b>65%</b>.</li>
+            <li>Engineered end-to-end reporting pipelines with Reporting tools and Mail Node automation, distributing formatted reports to <b>30+ stakeholders</b> at 100% delivery accuracy.</li>
+            <li>Built interactive Power BI dashboards tracking claims KPIs, cutting SLA escalation response time by <b>40%</b>.</li>
+            <li>Managed a claims management app in Power Apps, lowering data-entry errors by <b>30%</b>.</li>
+            <li>Implemented Power Automate flows across 10+ processes, improving process efficiency by <b>50%</b>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-card">
+          <div class="job-top"><span class="job-role">Data Analyst</span><span class="job-date">May 2024 — Sep 2025</span></div>
+          <div class="job-org"><b>TEKsystems Private Limited</b></div>
+          <ul>
+            <li>Built <b>8+ dashboards</b> in Power BI, Tableau, and Excel, adopted by 3 business units for weekly reporting.</li>
+            <li>Cleaned, transformed, and validated datasets of <b>1M+ rows</b> using SQL and Python at 99.5% accuracy.</li>
+            <li>Built forecasting and classification models in Scikit-learn, improving forecast accuracy by <b>22%</b> over baseline.</li>
+            <li>Delivered scheduled stakeholder reports, cutting ad-hoc reporting requests by <b>35%</b>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-card">
+          <div class="job-top"><span class="job-role">Junior Python Developer — Intern</span><span class="job-date">May 2023 — Apr 2024</span></div>
+          <div class="job-org"><b>Procode Technologies</b></div>
+          <ul>
+            <li>Engineered Python ETL workflows across multiple sources, cutting data prep time by <b>50%</b>.</li>
+            <li>Built supervised and unsupervised ML models with Scikit-learn for client predictive-analytics use cases.</li>
+            <li>Produced Matplotlib/Seaborn/Power BI reports translating model output for non-technical stakeholders.</li>
+            <li>Processed <b>500K+ row</b> datasets with Pandas and NumPy, preserving data integrity at scale.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="stage"><span class="num">STAGE 04</span> OUTPUT</div>
+    <div class="section-head">
+      <h2>Projects that shipped</h2>
+      <p>Each one replaced a specific manual process. The metric is the before-and-after, not the tool list.</p>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-metric"><span class="from">30–60 min</span><span class="arrow">→</span><span class="to">&lt;1 min</span></div>
+        <h3>CoE Automated Reporting System</h3>
+        <div class="proj-tech">Alteryx Designer · Mail Node · Excel</div>
+        <p>Pulls directly from the Data Mart, cleans and validates records, and consolidates Daily/Weekly/Monthly reports into a dynamically-named Excel workbook — then emails them out automatically. Delivery accuracy rose from 98% to 100%; total D-W-M reporting effort dropped over 95%.</p>
+      </div>
+      <div class="proj-card">
+        <div class="proj-metric"><span class="from">manual watch</span><span class="arrow">→</span><span class="to">rule-based</span></div>
+        <h3>Automated EDC Claims Notification System</h3>
+        <div class="proj-tech">Power Automate · Excel · SharePoint</div>
+        <p>Triggers conditional email alerts when EDC dates change across Thailand, India, and South Africa — a state-tracking mechanism compares current vs. previous values so alerts only fire when all three countries update, eliminating false notifications and manual monitoring.</p>
+      </div>
+      <div class="proj-card">
+        <div class="proj-metric"><span class="from">7 min/doc</span><span class="arrow">→</span><span class="to">1 min/doc</span></div>
+        <h3>BOE &amp; Invoice Validation Automation</h3>
+        <div class="proj-tech">Python · PDF Extraction · Tkinter</div>
+        <p>A desktop app that extracts invoice number, date, amount, weight, HSN, price, and package details from BOE and Invoice PDFs, validates every field, and emails a comparison report — pushing accuracy from 99.7% to 100% and retiring the line-by-line manual check entirely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="wrap">
+    <div class="stage"><span class="num">STAGE 05</span> VALIDATE</div>
+    <div class="section-head">
+      <h2>Credentials &amp; achievements</h2>
+    </div>
+
+    <div class="cred-grid" style="margin-bottom:26px;">
+      <div class="cred-card">
+        <h3>CERTIFICATIONS</h3>
+        <div class="cred-item">
+          <div class="c-name">Microsoft Certified: Power BI Data Analyst Associate (PL-300)</div>
+          <div class="c-meta">Microsoft · 2024</div>
+        </div>
+        <div class="cred-item">
+          <div class="c-name">Alteryx Designer Core Certification</div>
+          <div class="c-meta">Alteryx</div>
+        </div>
+      </div>
+      <div class="cred-card">
+        <h3>EDUCATION</h3>
+        <div class="cred-item">
+          <div class="c-name">Bachelor of Technology — Information Technology</div>
+          <div class="c-meta">MAM College of Engineering, Trichy · In Progress, 2019–2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iso-chart">
+      <div class="iso-plane">
+        <div class="iso-bar" style="--h:140px;">
+          <div class="iso-front"></div><div class="iso-side"></div><div class="iso-top"></div>
+        </div>
+        <div class="iso-bar" style="--h:192px;">
+          <div class="iso-front iso-teal"></div><div class="iso-side iso-teal"></div><div class="iso-top iso-teal"></div>
+        </div>
+        <div class="iso-bar" style="--h:62px;">
+          <div class="iso-front"></div><div class="iso-side"></div><div class="iso-top"></div>
+        </div>
+        <div class="iso-bar" style="--h:176px;">
+          <div class="iso-front iso-teal"></div><div class="iso-side iso-teal"></div><div class="iso-top iso-teal"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-grid">
+      <div class="ach-card"><span class="ach-num">65%</span><span class="ach-desc">manual reporting effort cut at Ford EDC — ~20 person-hours saved weekly</span></div>
+      <div class="ach-card"><span class="ach-num">500K+</span><span class="ach-desc">records processed daily via Alteryx, zero manual intervention</span></div>
+      <div class="ach-card"><span class="ach-num">22%</span><span class="ach-desc">forecast accuracy gain from Scikit-learn models informing planning</span></div>
+      <div class="ach-card"><span class="ach-num">86%</span><span class="ach-desc">faster BOE/Invoice validation — 7 min manual to 1 min automated</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="stage" style="justify-content:center;"><span class="num">STAGE 06</span> DELIVER</div>
+    <h2>Let's automate something.</h2>
+    <p>Open to Data Analyst, Alteryx Developer, and Automation Engineer roles. The fastest way to reach me is email.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:balathedataanalyst@gmail.com">balathedataanalyst@gmail.com</a>
+      <a class="btn btn-ghost" href="tel:+919361265362">+91 93612 65362</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/balajayan-r" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/Balajayan" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Balajayan R — Data Analyst · Alteryx Designer · Automation Engineer</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  (function initNetwork(){
+    const canvas = document.getElementById('bg-net');
+    if(!canvas || typeof THREE === 'undefined') return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene3 = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 2000);
+    camera.position.set(0, 0, 620);
+
+    const COUNT = window.innerWidth < 720 ? 34 : 70;
+    const RANGE = { x: 900, y: 600, z: 400 };
+    const points = [];
+    const velocities = [];
+
+    for(let i=0;i<COUNT;i++){
+      points.push(new THREE.Vector3(
+        (Math.random()-0.5)*RANGE.x,
+        (Math.random()-0.5)*RANGE.y,
+        (Math.random()-0.5)*RANGE.z
+      ));
+      velocities.push(new THREE.Vector3(
+        (Math.random()-0.5)*0.25,
+        (Math.random()-0.5)*0.25,
+        (Math.random()-0.5)*0.25
+      ));
+    }
+
+    const dotGeo = new THREE.BufferGeometry().setFromPoints(points);
+    const dotMat = new THREE.PointsMaterial({ color:0x22d3b8, size:4.5, transparent:true, opacity:0.85, sizeAttenuation:true });
+    const dots = new THREE.Points(dotGeo, dotMat);
+    scene3.add(dots);
+
+    const lineMat = new THREE.LineBasicMaterial({ color:0x0ea5a0, transparent:true, opacity:0.22 });
+    let lineSegments = new THREE.LineSegments(new THREE.BufferGeometry(), lineMat);
+    scene3.add(lineSegments);
+
+    const LINK_DIST = 170;
+
+    function rebuildLines(){
+      const verts = [];
+      for(let i=0;i<COUNT;i++){
+        for(let j=i+1;j<COUNT;j++){
+          const d = points[i].distanceTo(points[j]);
+          if(d < LINK_DIST){
+            verts.push(points[i].x, points[i].y, points[i].z);
+            verts.push(points[j].x, points[j].y, points[j].z);
+          }
+        }
+      }
+      lineSegments.geometry.dispose();
+      lineSegments.geometry = new THREE.BufferGeometry();
+      lineSegments.geometry.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+    }
+
+    let frame = 0;
+    function animate(){
+      requestAnimationFrame(animate);
+      frame++;
+      for(let i=0;i<COUNT;i++){
+        points[i].add(velocities[i]);
+        if(Math.abs(points[i].x) > RANGE.x/2) velocities[i].x *= -1;
+        if(Math.abs(points[i].y) > RANGE.y/2) velocities[i].y *= -1;
+        if(Math.abs(points[i].z) > RANGE.z/2) velocities[i].z *= -1;
+      }
+      dotGeo.setFromPoints(points);
+      dotGeo.attributes.position.needsUpdate = true;
+      if(frame % 4 === 0) rebuildLines();
+
+      scene3.rotation.y += 0.0007;
+      scene3.rotation.x = Math.sin(frame*0.0006)*0.05;
+
+      renderer.render(scene3, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  })();
+
+  const scene = document.getElementById('scene');
+  const outer = scene.closest('.scene-outer');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(!reduceMotion && outer){
+    let baseX = 18, baseY = -22;
+    outer.addEventListener('mousemove', (e) => {
+      const rect = outer.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      const rx = baseX - py * 16;
+      const ry = baseY + px * 20;
+      scene.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    outer.addEventListener('mouseleave', () => {
+      scene.style.transform = `rotateX(${baseX}deg) rotateY(${baseY}deg)`;
+    });
+  }
+
+  if(!reduceMotion){
+    document.querySelectorAll('.job-card, .proj-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${-py*3}deg) rotateY(${px*4}deg) translateY(-2px)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+</script>
+
+</body>
+</html>
