@@ -430,37 +430,98 @@
   }
   .job li b{ color:var(--text); font-weight:600; }
 
-  /* ---------- Projects ---------- */
-  .proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  /* ---------- Projects (gallery tiles) ---------- */
+  .proj-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:26px; }
   @media (max-width:900px){ .proj-grid{ grid-template-columns:1fr; } }
   .proj-card{
     background:var(--bg-elevated);
     border:1px solid var(--line);
-    border-radius:10px;
-    padding:26px;
+    border-radius:14px;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
     transform-style:preserve-3d;
     transition:transform .12s ease, box-shadow .3s ease, border-color .3s ease;
   }
-  .proj-card:hover{ border-color:var(--line-strong); box-shadow:0 30px 60px -30px rgba(0,0,0,0.75); }
-  .proj-metric{
-    display:flex; align-items:center; gap:10px;
-    font-family:var(--font-mono);
-    margin-bottom:16px;
+  .proj-card:hover{ border-color:var(--accent); box-shadow:0 30px 60px -30px rgba(0,0,0,0.8), 0 0 0 1px var(--accent-soft); }
+
+  /* split preview: light "manual" half + dark "automated" half */
+  .proj-visual{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    height:250px;
+    border-bottom:1px solid var(--line);
   }
-  .proj-metric .from{ color:var(--text-mute); font-size:13px; text-decoration:line-through; }
-  .proj-metric .arrow{ color:var(--accent); }
-  .proj-metric .to{ color:var(--teal); font-size:17px; font-weight:600; }
-  .proj-card h3{ font-size:1.05rem; margin-bottom:8px; }
-  .proj-tech{
-    font-family:var(--font-mono);
-    font-size:10.5px;
-    color:var(--text-mute);
-    margin-bottom:14px;
-    letter-spacing:0.03em;
+  .pv-badge{
+    position:absolute; top:14px; left:14px; z-index:3;
+    font-family:var(--font-mono); font-size:11px; font-weight:600;
+    padding:5px 9px; border-radius:6px;
+    background:rgba(10,14,26,0.82); color:var(--accent);
+    border:1px solid var(--line-strong);
+    backdrop-filter:blur(6px);
   }
-  .proj-card p{ color:var(--text-dim); font-size:13.8px; }
+  .pv-date{
+    position:absolute; top:14px; right:14px; z-index:3;
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.05em;
+    padding:5px 9px; border-radius:6px;
+    background:var(--accent); color:#04140F; font-weight:600;
+  }
+  .pv-before{
+    background:#EAE7DC; color:#14182A;
+    padding:58px 22px 20px;
+    display:flex; flex-direction:column; justify-content:flex-end; gap:6px;
+    position:relative;
+  }
+  .pv-before::after{ /* faux sheet lines */
+    content:''; position:absolute; left:22px; right:22px; top:58px; height:70px;
+    background:repeating-linear-gradient(180deg, rgba(20,24,42,0.16) 0 5px, transparent 5px 15px);
+    border-radius:2px;
+  }
+  .pv-after{
+    background:linear-gradient(160deg,#0B1226,#0A0E1A);
+    padding:58px 20px 20px;
+    display:flex; flex-direction:column; justify-content:flex-end; gap:6px;
+    position:relative;
+  }
+  .pv-label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+    opacity:.6;
+  }
+  .pv-after .pv-label{ color:var(--accent); opacity:1; }
+  .pv-big{
+    font-family:var(--font-display); font-weight:700; line-height:1;
+    font-size:clamp(1.5rem,2.6vw,2.05rem); letter-spacing:-0.02em;
+  }
+  .pv-before .pv-big{ text-decoration:line-through; text-decoration-thickness:2px; text-decoration-color:rgba(20,24,42,0.45); }
+  .pv-after .pv-big{ color:var(--accent); }
+  .pv-sub{ font-size:11.5px; opacity:.7; }
+  .pv-term{
+    position:absolute; left:20px; right:20px; top:56px;
+    font-family:var(--font-mono); font-size:10px; line-height:1.75; color:var(--text-mute);
+    white-space:nowrap; overflow:hidden;
+  }
+  .pv-term .ok{ color:var(--accent); }
+  .pv-swap{ /* centre pill like VS marker */
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    z-index:3; width:38px; height:38px; display:grid; place-items:center;
+    font-family:var(--font-mono); font-size:11px; font-weight:700;
+    color:#04140F; background:var(--accent);
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  }
+  .proj-body{ padding:24px 26px 28px; }
+  .proj-card h3{ font-size:1.2rem; margin-bottom:8px; }
+  .proj-tech{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .proj-tech span{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.03em;
+    color:var(--text-dim); padding:4px 9px; border-radius:999px;
+    border:1px solid var(--line-strong); background:rgba(255,255,255,0.02);
+  }
+  .proj-body ul{ list-style:none; }
+  .proj-body li{ position:relative; padding-left:18px; margin-bottom:9px; color:var(--text-dim); font-size:13.8px; }
+  .proj-body li::before{ content:'▸'; position:absolute; left:0; color:var(--teal); font-size:12px; }
+  .proj-body li b{ color:var(--text); font-weight:600; }
+  @media (max-width:520px){ .proj-visual{ height:220px; } .pv-before,.pv-after{ padding-left:14px; padding-right:14px; } }
 
   /* ---------- Certs + Education ---------- */
   .cred-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
@@ -478,42 +539,66 @@
   .cred-item .c-meta{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-mute); margin-top:3px; }
 
   /* ---------- Achievements ---------- */
-  .iso-chart{
-    perspective:1300px;
-    height:220px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    margin-bottom:40px;
+  /* ---------- AI core (manual -> automation HUD) ---------- */
+  .ai-core{
+    --ac:34,211,184;
+    position:relative; height:440px; margin:0 auto 44px;
+    border:1px solid rgba(var(--ac),.28); border-radius:14px; overflow:hidden; cursor:pointer;
+    background:radial-gradient(ellipse at 50% 50%, rgba(var(--ac),.10), transparent 62%), #070B16;
+    box-shadow:inset 0 0 80px rgba(var(--ac),.07), 0 30px 80px -40px rgba(var(--ac),.5);
+    transition:border-color .5s, box-shadow .5s;
+    -webkit-tap-highlight-color:transparent; user-select:none;
   }
-  .iso-plane{
-    display:flex;
-    align-items:flex-end;
-    gap:34px;
-    transform-style:preserve-3d;
-    transform:rotateX(58deg) rotateZ(-38deg);
+  .ai-core.manual{ --ac:255,70,70; }
+  .ai-core canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .ai-core::after{ /* scanlines */
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:4;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px);
+    mix-blend-mode:screen;
   }
-  .iso-bar{ position:relative; width:46px; height:46px; transform-style:preserve-3d; }
-  .iso-front, .iso-side, .iso-top{ position:absolute; }
-  .iso-front{
-    left:0; bottom:0; width:46px; height:var(--h);
-    transform-origin:bottom; transform:rotateX(-90deg);
-    background:linear-gradient(180deg, #6EF0DA, var(--accent));
+  .ai-flash{ position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.9), rgba(var(--ac),.55) 35%, transparent 70%); }
+  .ai-core.fire .ai-flash{ animation:aiFlash .9s ease-out; }
+  .ai-core.fire{ animation:aiShake .55s cubic-bezier(.36,.07,.19,.97); }
+  @keyframes aiFlash{ 0%{opacity:.95} 100%{opacity:0} }
+  @keyframes aiShake{ 10%,90%{transform:translate(-1px,0)} 20%,80%{transform:translate(3px,1px)} 30%,50%,70%{transform:translate(-5px,-1px)} 40%,60%{transform:translate(5px,2px)} }
+  .ai-corner{ position:absolute; width:22px; height:22px; z-index:3; border:2px solid rgba(var(--ac),.8); pointer-events:none; }
+  .ai-corner.tl{ top:12px; left:12px; border-right:none; border-bottom:none; }
+  .ai-corner.tr{ top:12px; right:12px; border-left:none; border-bottom:none; }
+  .ai-corner.bl{ bottom:12px; left:12px; border-right:none; border-top:none; }
+  .ai-corner.br{ bottom:12px; right:12px; border-left:none; border-top:none; }
+  .ai-hud{ position:absolute; z-index:3; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:rgba(var(--ac),.95); pointer-events:none; text-transform:uppercase; }
+  .ai-hud .dim{ color:var(--text-mute); }
+  .ai-title{ top:22px; left:26px; line-height:1.7; }
+  .ai-title b{ display:block; font-size:13px; letter-spacing:.2em; color:#fff; }
+  .ai-status{ display:inline-flex; align-items:center; gap:7px; }
+  .ai-status i{ width:7px; height:7px; border-radius:50%; background:rgba(var(--ac),1); box-shadow:0 0 10px rgba(var(--ac),1); animation:aiBlink 1.4s infinite; }
+  @keyframes aiBlink{ 50%{opacity:.25} }
+  .ai-stats{ top:22px; right:26px; text-align:right; display:grid; gap:12px; }
+  .ai-stats div span{ display:block; font-size:19px; color:#fff; letter-spacing:.02em; text-shadow:0 0 12px rgba(var(--ac),.8); }
+  .ai-stats div em{ font-style:normal; color:var(--text-mute); font-size:9.5px; }
+  .ai-log{ bottom:56px; left:26px; width:min(330px,60%); line-height:1.75; font-size:10.5px; text-transform:none; letter-spacing:.03em; min-height:92px; }
+  .ai-log p{ margin:0; white-space:nowrap; overflow:hidden; opacity:.95; }
+  .ai-log p .ok{ color:#fff; }
+  .ai-hint{ left:0; right:0; bottom:20px; text-align:center; color:rgba(var(--ac),.9); animation:aiHint 2s ease-in-out infinite; }
+  @keyframes aiHint{ 50%{opacity:.35} }
+  .ai-core.live .ai-hint{ display:none; }
+  .ai-modes{ position:absolute; z-index:6; right:22px; bottom:16px; display:flex; gap:8px; }
+  .ai-modes button{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    padding:7px 11px; border-radius:4px; cursor:pointer;
+    color:var(--text-dim); background:rgba(255,255,255,.04); border:1px solid var(--line-strong); transition:all .2s;
   }
-  .iso-side{
-    right:0; bottom:0; width:46px; height:var(--h);
-    transform-origin:bottom right; transform:rotateX(-90deg) rotateY(90deg);
-    background:linear-gradient(180deg, #0C8A85, #06504E);
+  .ai-modes button:hover{ color:#fff; border-color:rgba(var(--ac),.8); }
+  .ai-modes button.on{ color:#04140F; background:rgba(var(--ac),1); border-color:rgba(var(--ac),1); font-weight:600; }
+  @media (max-width:700px){
+    .ai-core{ height:400px; }
+    .ai-stats{ display:none; }
+    .ai-log{ width:calc(100% - 52px); bottom:58px; font-size:10px; }
+    .ai-modes{ left:22px; right:22px; justify-content:center; }
+    .ai-hint{ bottom:56px; }
   }
-  .iso-top{
-    left:0; top:0; width:46px; height:46px;
-    transform:translateZ(var(--h));
-    background:linear-gradient(135deg, #9CF5E4, #6EF0DA);
-  }
-  .iso-teal .iso-front, .iso-front.iso-teal{ background:linear-gradient(180deg, #5FD9CE, var(--teal)); }
-  .iso-teal .iso-side, .iso-side.iso-teal{ background:linear-gradient(180deg, #0A7A76, #054947); }
-  .iso-teal .iso-top, .iso-top.iso-teal{ background:linear-gradient(135deg, #8FE8DD, #5FD9CE); }
-  @media (max-width:640px){ .iso-chart{ transform:scale(0.72); height:170px; } }
+  @media (prefers-reduced-motion: reduce){ .ai-core.fire{ animation:none; } .ai-hint,.ai-status i{ animation:none; } }
 
   .ach-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
   @media (max-width:820px){ .ach-grid{ grid-template-columns:1fr 1fr; } }
@@ -537,6 +622,117 @@
     font-size:12px;
     color:var(--text-mute);
   }
+
+  /* ---------- Hero polish ---------- */
+  .hero-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:7px 13px; border-radius:999px;
+    border:1px solid var(--line-strong); color:var(--text-dim);
+    background:rgba(255,255,255,0.03); backdrop-filter:blur(6px);
+  }
+  .pill.live{ border-color:rgba(34,211,184,0.4); color:var(--accent); background:var(--accent-soft); }
+  .pill .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 0 0 rgba(34,211,184,0.7); animation:pulse 2s infinite;
+  }
+  @keyframes pulse{ 70%{ box-shadow:0 0 0 9px rgba(34,211,184,0); } 100%{ box-shadow:0 0 0 0 rgba(34,211,184,0); } }
+  .hero-title{ font-size:clamp(2.7rem, 6vw, 4.7rem); line-height:1.02; }
+  .hero-title .name{ display:block; color:var(--text); }
+  .hero-title .grad{
+    background:linear-gradient(100deg,#6EF0DA 0%,#22D3B8 45%,#0EA5A0 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-title .line2{ display:block; margin-top:10px; font-size:0.55em; line-height:1.15; color:var(--text-dim); font-weight:500; }
+  .hero-sub{ font-size:1.12rem; max-width:52ch; line-height:1.65; }
+  .hero-sub b{ color:var(--accent); }
+  .hero-sub .ford{ color:var(--text); font-weight:600; border-bottom:1px solid var(--accent); }
+  .hero-chips{ display:flex; flex-wrap:wrap; gap:8px; margin:-8px 0 30px; }
+  .hero-chips span{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-mute);
+    padding:4px 10px; border:1px solid var(--line); border-radius:4px;
+  }
+  .hero-stats{ grid-template-columns:repeat(4,1fr); }
+  .hero-stats .stat{ padding-right:12px; padding-left:2px; }
+  .hero-stats .stat + .stat{ padding-left:16px; }
+  .stat-num{ font-size:1.35rem; }
+  @media (max-width:560px){ .hero-stats{ grid-template-columns:1fr 1fr; } .hero-stats .stat:nth-child(2){ border-right:none; } .hero-stats .stat:nth-child(n+3){ border-top:1px solid var(--line); margin-top:14px; } }
+  .rise{ opacity:0; transform:translateY(18px); animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+  .d1{animation-delay:.05s}.d2{animation-delay:.15s}.d3{animation-delay:.28s}.d4{animation-delay:.4s}.d5{animation-delay:.52s}.d6{animation-delay:.64s}
+  @media (prefers-reduced-motion: reduce){ .rise{ animation:none; opacity:1; transform:none; } .pill .pulse{ animation:none; } }
+
+  /* ---------- Hero animation: manual -> automated ---------- */
+  .scene{ transform:rotateX(3deg) rotateY(-6deg); }
+  .scene svg text{ font-family:var(--font-mono); }
+  .scene .lbl{ font-size:11px; letter-spacing:.08em; font-weight:600; }
+  .scene .tiny{ font-size:7.5px; }
+  .scene .mono{ font-size:9px; fill:#B7BDCC; }
+  .scene .pt{ font-size:9.5px; font-weight:600; fill:#F2F0E8; letter-spacing:.05em; }
+  .scene .ps{ font-size:8.5px; fill:#B7BDCC; }
+  .scene .err{ font-size:9px; font-weight:600; opacity:0; animation:blinkErr 2.6s infinite; }
+  .phA,.phC,.holo,.burst,.scan,.screens,.mglow{ transform-box:fill-box; }
+  .phA{ animation:phA 18s infinite; }
+  .phC{ opacity:0; animation:phC 18s infinite; }
+  .holo{ transform-box:fill-box; transform-origin:center; opacity:0; animation:holo 18s infinite; filter:drop-shadow(0 0 8px rgba(34,211,184,.4)); }
+  .mglow{ opacity:0; animation:phC 18s infinite; filter:drop-shadow(0 0 10px rgba(34,211,184,.8)); }
+  .screens{ animation:glitch 18s infinite; }
+  .scan{ opacity:0; animation:scan 18s infinite; }
+  .burst{ opacity:0; animation:burst 18s infinite; }
+  .head{ transform-box:view-box; transform-origin:135px 256px; animation:headT 18s infinite; }
+  .hands{ animation:typeA .32s ease-in-out infinite alternate; }
+  .key{ animation:keyF .5s steps(2) infinite; }
+  .cursor{ animation:cur 1s steps(2) infinite; }
+  .hand{ transform-box:fill-box; transform-origin:50% 100%; animation:spin 2.4s linear infinite; }
+  .bubble{ animation:bob 2.2s ease-in-out infinite alternate; }
+  .hl{ fill:none; stroke:#22D3B8; stroke-width:1.3; stroke-dasharray:4 5; opacity:.8; animation:flow 1.6s linear infinite; }
+  .pulse{ fill:#F2F0E8; filter:drop-shadow(0 0 4px #22D3B8); }
+  .gear{ transform-box:fill-box; transform-origin:center; animation:spin 6s linear infinite; }
+  .gear.rev{ animation-direction:reverse; animation-duration:4.5s; }
+  .bar{ transform-box:fill-box; transform-origin:bottom; animation:grow 2.4s ease-in-out infinite alternate; }
+  .load{ transform-box:fill-box; transform-origin:left; animation:load 2.4s ease-in-out infinite; }
+  .prog{ transform-box:fill-box; transform-origin:left; animation:prog 18s infinite; }
+  .tl{ opacity:0; font-size:9px; fill:#B7BDCC; }
+  .l1{ animation:l1 18s infinite; } .l2{ animation:l2 18s infinite; } .l3{ animation:l3 18s infinite; } .l4{ animation:l4 18s infinite; }
+  .done{ font-size:8.5px; animation:done 18s infinite; }
+  .steam{ animation:steam 2s ease-in-out infinite; } .steam.s2{ animation-delay:.9s; }
+  .tw{ animation:tw 2.8s ease-in-out infinite; } .tw.t2{ animation-delay:.9s; } .tw.t3{ animation-delay:1.7s; }
+  .floor{ animation:floorG 18s infinite; }
+
+  @keyframes phA{ 0%,30%{opacity:1} 38%,94%{opacity:0} 100%{opacity:1} }
+  @keyframes phC{ 0%,42%{opacity:0} 52%,90%{opacity:1} 97%,100%{opacity:0} }
+  @keyframes holo{ 0%,43%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.12)} 55%,90%{opacity:1;transform:translate(0,0) scale(1)} 97%,100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.12)} }
+  @keyframes scan{ 0%,33%{opacity:0;transform:translateY(0)} 35%{opacity:1} 46%{opacity:1;transform:translateY(106px)} 47%,100%{opacity:0;transform:translateY(106px)} }
+  @keyframes glitch{ 0%,35%,48%,100%{transform:none} 37%{transform:translate(-3px,0)} 39%{transform:translate(4px,1px)} 41%{transform:translate(-2px,-1px)} 43%{transform:translate(3px,0)} }
+  @keyframes burst{ 0%,36%{opacity:0;transform:translate(0,0)} 40%{opacity:1} 54%,100%{opacity:0;transform:translate(var(--dx),var(--dy))} }
+  @keyframes headT{ 0%,42%{transform:rotate(0)} 54%,90%{transform:rotate(-9deg)} 98%,100%{transform:rotate(0)} }
+  @keyframes typeA{ from{transform:translateY(0)} to{transform:translateY(-3px)} }
+  @keyframes keyF{ 0%{opacity:1} 100%{opacity:.35} }
+  @keyframes cur{ 50%{opacity:0} }
+  @keyframes spin{ to{transform:rotate(360deg)} }
+  @keyframes bob{ to{transform:translateY(-4px)} }
+  @keyframes blinkErr{ 0%,100%{opacity:0} 20%,60%{opacity:1} }
+  @keyframes grow{ from{transform:scaleY(.3)} to{transform:scaleY(1)} }
+  @keyframes load{ 0%{transform:scaleX(.05)} 80%,100%{transform:scaleX(1)} }
+  @keyframes prog{ 0%,46%{transform:scaleX(0)} 58%,100%{transform:scaleX(1)} }
+  @keyframes l1{ 0%,46%{opacity:0} 48%,100%{opacity:1} }
+  @keyframes l2{ 0%,49%{opacity:0} 51%,100%{opacity:1} }
+  @keyframes l3{ 0%,52%{opacity:0} 54%,100%{opacity:1} }
+  @keyframes l4{ 0%,55%{opacity:0} 57%,100%{opacity:1} }
+  @keyframes done{ 0%,59%{opacity:0} 62%,100%{opacity:1} }
+  @keyframes steam{ 0%,100%{opacity:.2;transform:translateY(0)} 50%{opacity:.8;transform:translateY(-3px)} }
+  @keyframes tw{ 0%,100%{opacity:.1} 50%{opacity:1} }
+  @keyframes floorG{ 0%,40%{opacity:.35} 55%,90%{opacity:1} 100%{opacity:.35} }
+  @media (prefers-reduced-motion: reduce){
+    .phA{ animation:none; opacity:0; }
+    .phC,.holo,.mglow{ animation:none; opacity:1; }
+    .holo{ transform:none; }
+    .screens,.scan,.burst,.head,.hands,.key,.cursor,.hand,.bubble,.hl,.gear,.bar,.load,.prog,.steam,.tw,.floor{ animation:none; }
+    .tl{ animation:none; opacity:1; }
+    .scan,.burst{ display:none; }
+  }
+  @media (max-width:900px){ .scene-outer{ height:380px; } .scene{ height:340px; } }
 
   @media (prefers-reduced-motion: reduce){
     .flow-path{ animation:none; }
@@ -578,41 +774,149 @@
 <header class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="stage"><span class="num">STAGE 00</span> SOURCE</div>
-      <h1 class="hero-title">Balajayan R<br><span class="line2">turns raw data into running systems.</span></h1>
-      <p class="hero-sub">Data Analyst and Alteryx Designer with <b>3+ years</b> building ETL pipelines, automated reporting, and BI dashboards — currently engineering automation for Ford India's Engineering &amp; Development Centre.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="#experience">View the pipeline ↓</a>
+      <div class="hero-badges rise d1">
+        <span class="pill live"><span class="pulse"></span>Ford India · Engineering &amp; Development Centre</span>
+        <span class="pill">Data Analyst · Alteryx Designer</span>
+      </div>
+      <h1 class="hero-title rise d2"><span class="name">Balajayan R</span><span class="line2">turns raw data into <span class="grad">running systems.</span></span></h1>
+      <p class="hero-sub rise d3">Data Analyst and Alteryx Designer with <b>3+ years</b> building <b>ETL pipelines</b>, <b>automated reporting</b>, and <b>BI dashboards</b> — currently engineering automation for GI groups deployed at <span class="ford">Ford India's Engineering &amp; Development Centre</span>.</p>
+      <div class="hero-chips rise d4"><span>Alteryx</span><span>Python</span><span>SQL</span><span>Power BI</span><span>Power Automate</span></div>
+      <div class="hero-cta rise d5">
+        <a class="btn btn-primary" href="#projects">See what I've shipped ↓</a>
         <a class="btn btn-ghost" href="mailto:balathedataanalyst@gmail.com">balathedataanalyst@gmail.com</a>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats rise d6">
         <div class="stat"><span class="stat-num">500K+</span><span class="stat-label">records processed daily</span></div>
-        <div class="stat"><span class="stat-num">65%</span><span class="stat-label">manual effort cut at Ford EDC</span></div>
+        <div class="stat"><span class="stat-num">95%</span><span class="stat-label">reporting effort cut (CoE)</span></div>
+        <div class="stat"><span class="stat-num">&lt;10 min</span><span class="stat-label">monthly KPI report (was ~1 day)</span></div>
         <div class="stat"><span class="stat-num">PL-300</span><span class="stat-label">certified Power BI analyst</span></div>
       </div>
     </div>
 
     <div class="scene-outer">
       <div class="scene" id="scene">
-        <svg viewBox="0 0 500 420" aria-hidden="true">
+        <svg viewBox="0 0 560 430" role="img" aria-label="Animation: a developer working manually on a spreadsheet, then the computer transforms into an automated data pipeline">
           <defs>
-            <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#22D3B8"/>
-              <stop offset="100%" stop-color="#0EA5A0"/>
-            </linearGradient>
+            <linearGradient id="scanG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22D3B8" stop-opacity="0"/><stop offset=".5" stop-color="#22D3B8" stop-opacity=".55"/><stop offset="1" stop-color="#22D3B8" stop-opacity="0"/></linearGradient>
+            <radialGradient id="floorG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#22D3B8" stop-opacity=".28"/><stop offset="1" stop-color="#22D3B8" stop-opacity="0"/></radialGradient>
+            <linearGradient id="scrC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1830"/><stop offset="1" stop-color="#06222A"/></linearGradient>
           </defs>
-          <path class="flow-path" d="M75,300 C140,260 150,180 190,155"/>
-          <path class="flow-path" d="M245,190 C300,160 320,130 355,95"/>
-          <path class="flow-path" d="M410,120 C420,180 400,260 350,300"/>
-          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.6s" repeatCount="indefinite" path="M75,300 C140,260 150,180 190,155"/></circle>
-          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.2s" begin="0.4s" repeatCount="indefinite" path="M245,190 C300,160 320,130 355,95"/></circle>
-          <circle class="flow-pulse" r="3.4"><animateMotion dur="2.9s" begin="0.9s" repeatCount="indefinite" path="M410,120 C420,180 400,260 350,300"/></circle>
+
+          <!-- status labels -->
+          <g class="phA"><rect x="14" y="8" width="168" height="22" rx="11" fill="#2a2110" stroke="#F5B14C" stroke-opacity=".6"/><circle cx="28" cy="19" r="3.5" fill="#F5B14C"/><text x="38" y="23" class="lbl" fill="#F5B14C">MANUAL · 30–60 min</text></g>
+          <g class="phC"><rect x="14" y="8" width="188" height="22" rx="11" fill="#06241F" stroke="#22D3B8" stroke-opacity=".7"/><circle cx="28" cy="19" r="3.5" fill="#22D3B8"/><text x="38" y="23" class="lbl" fill="#22D3B8">AUTOMATED · &lt;1 min</text></g>
+
+          <!-- floor -->
+          <ellipse cx="280" cy="404" rx="250" ry="22" fill="url(#floorG)" class="floor"/>
+          <line x1="20" x2="540" y1="400" y2="400" stroke="#ffffff" stroke-opacity=".08"/>
+
+          <!-- desk -->
+          <rect x="40" y="330" width="480" height="12" rx="3" fill="#1A2440" stroke="#22D3B8" stroke-opacity=".25"/>
+          <rect x="70" y="342" width="9" height="58" fill="#141c36"/><rect x="480" y="342" width="9" height="58" fill="#141c36"/>
+
+          <!-- chair -->
+          <rect x="92" y="262" width="9" height="62" rx="4" fill="#243257"/>
+          <rect x="92" y="322" width="76" height="9" rx="4" fill="#243257"/>
+          <rect x="126" y="331" width="6" height="52" fill="#1a2440"/><path d="M104 392h50" stroke="#243257" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- person -->
+          <path d="M118 322 L186 326 L192 390" fill="none" stroke="#2a3760" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M108 268 Q134 254 152 268 L148 324 L108 324 Z" fill="#243257" stroke="#22D3B8" stroke-opacity=".5"/>
+          <g class="head">
+            <circle cx="135" cy="238" r="16" fill="#2c3a68"/>
+            <path d="M119 236 Q122 218 138 220 Q152 222 151 236 Q142 228 119 236Z" fill="#0E1526"/>
+            <path d="M120 240 Q118 228 130 224" fill="none" stroke="#22D3B8" stroke-width="3" stroke-linecap="round"/>
+            <rect x="116" y="238" width="6" height="12" rx="3" fill="#22D3B8"/>
+          </g>
+
+          <!-- monitor -->
+          <rect x="265" y="292" width="30" height="36" fill="#141c36"/><rect x="238" y="326" width="84" height="5" rx="2" fill="#243257"/>
+          <rect class="mglow" x="168" y="168" width="224" height="129" rx="10" fill="none" stroke="#22D3B8" stroke-width="2"/>
+          <rect x="170" y="170" width="220" height="125" rx="9" fill="#101a33" stroke="#33426e"/>
+          <g class="screens">
+            <g class="phA">
+              <rect x="178" y="178" width="204" height="109" rx="3" fill="#EAE7DC"/>
+              <rect x="178" y="178" width="204" height="12" fill="#1D6F42"/><text x="183" y="187" class="tiny" fill="#fff">Report_final_v7.xlsx</text>
+              <line x1="178" x2="382" y1="192" y2="192" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="202" y2="202" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="212" y2="212" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="222" y2="222" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="232" y2="232" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="242" y2="242" stroke="#B9B4A4" stroke-width=".6"/><line x1="178" x2="382" y1="252" y2="252" stroke="#B9B4A4" stroke-width=".6"/><line x1="178.0" x2="178.0" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><line x1="218.8" x2="218.8" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><line x1="259.6" x2="259.6" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><line x1="300.4" x2="300.4" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><line x1="341.2" x2="341.2" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><line x1="382.0" x2="382.0" y1="192" y2="262" stroke="#B9B4A4" stroke-width=".6"/><rect x="180.0" y="194" width="14" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="220.8" y="194" width="30" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="261.6" y="194" width="14" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="302.4" y="194" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="180.0" y="204" width="20" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="220.8" y="204" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="261.6" y="204" width="20" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="343.2" y="204" width="14" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="302.4" y="214" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="343.2" y="214" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="180.0" y="224" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="220.8" y="224" width="20" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="261.6" y="224" width="30" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="302.4" y="224" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="343.2" y="224" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="180.0" y="234" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="261.6" y="234" width="30" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="302.4" y="234" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="343.2" y="234" width="20" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="180.0" y="244" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="261.6" y="244" width="14" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="302.4" y="244" width="26" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="343.2" y="244" width="30" height="4" rx="1" fill="#14182A" opacity=".5"/><rect x="219" y="202" width="40.8" height="10" fill="#E5484D" opacity=".35"/><rect x="301" y="232" width="40.8" height="10" fill="#E5484D" opacity=".35"/>
+              <rect class="cursor" x="260.5" y="212" width="40.8" height="10" fill="none" stroke="#1D6F42" stroke-width="1.6"/>
+              <rect x="178" y="268" width="204" height="19" fill="#14182A"/><text x="184" y="280" class="tiny" fill="#F5B14C">Copy · paste · repeat…  file 12/47</text>
+            </g>
+            <g class="phC">
+              <rect x="178" y="178" width="204" height="109" rx="3" fill="url(#scrC)"/>
+              <g class="mono">
+                <text class="tl l1" x="188" y="198" fill="#7C859C">$ pipeline.run()</text>
+                <text class="tl l2" x="188" y="212"><tspan fill="#22D3B8">✓</tspan> datamart · 500K rows</text>
+                <text class="tl l3" x="188" y="226"><tspan fill="#22D3B8">✓</tspan> validated · deduped</text>
+                <text class="tl l4" x="188" y="240"><tspan fill="#22D3B8">✓</tspan> report emailed</text>
+              </g>
+              <rect x="188" y="258" width="184" height="6" rx="3" fill="#22D3B8" fill-opacity=".18"/><rect class="prog" x="188" y="258" width="184" height="6" rx="3" fill="#22D3B8"/>
+              <text class="tl done" x="188" y="279" fill="#22D3B8" font-weight="600">DONE · 58 sec · 100% accuracy</text>
+            </g>
+            <rect class="scan" x="172" y="172" width="216" height="14" fill="url(#scanG)"/>
+          </g>
+
+          <!-- keyboard + coffee -->
+          <rect x="212" y="320" width="136" height="9" rx="2" fill="#0E1526" stroke="#33426e"/><rect class="key" style="animation-delay:0.00s" x="219.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.07s" x="229.5" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.14s" x="240.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.21s" x="250.5" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.28s" x="261.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.35s" x="271.5" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.42s" x="282.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.49s" x="292.5" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.06s" x="303.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.13s" x="313.5" y="324" width="8" height="3" rx="1" fill="#3a4a78"/><rect class="key" style="animation-delay:0.20s" x="324.0" y="324" width="8" height="3" rx="1" fill="#3a4a78"/>
+          <rect x="392" y="314" width="16" height="16" rx="3" fill="#243257"/><path d="M408 318h5a4 4 0 010 8h-5" fill="none" stroke="#243257" stroke-width="2"/>
+          <g class="phC"><path class="steam" d="M396 308q-3-5 0-9t0-8" fill="none" stroke="#B7BDCC" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round"/><path class="steam s2" d="M403 308q-3-5 0-9t0-8" fill="none" stroke="#B7BDCC" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round"/></g>
+
+          <!-- arms: typing (A) / relaxed behind head (C) -->
+          <g class="phA"><g class="hands"><path d="M142 274 L174 300 L214 322" fill="none" stroke="#2c3a68" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="215" cy="322" r="5" fill="#2c3a68"/></g></g>
+          <g class="phC"><path d="M142 274 L168 262 L130 228" fill="none" stroke="#2c3a68" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></g>
+
+          <!-- phase A extras -->
+          <g class="phA">
+            <g class="bubble"><rect x="40" y="188" width="108" height="24" rx="12" fill="#14182A" stroke="#F5B14C" stroke-opacity=".6"/><text x="94" y="204" text-anchor="middle" class="tiny" fill="#F5B14C" font-size="10">Ctrl+C · Ctrl+V…</text><circle cx="118" cy="222" r="3" fill="#14182A" stroke="#F5B14C" stroke-opacity=".6"/></g>
+            <g transform="translate(470,64)"><circle r="26" fill="#14182A" stroke="#F5B14C" stroke-opacity=".7"/><line class="hand" x1="0" y1="0" x2="0" y2="-17" stroke="#F5B14C" stroke-width="2" stroke-linecap="round"/><line x1="0" y1="0" x2="10" y2="0" stroke="#F5B14C" stroke-width="2" stroke-linecap="round"/><text y="42" text-anchor="middle" class="tiny" fill="#F5B14C" font-size="10">45:00 …</text></g>
+            <text class="err" style="animation-delay:0s" x="406" y="196" fill="#E5484D">#REF!</text>
+            <text class="err" style="animation-delay:.7s" x="420" y="230" fill="#E5484D">dup rows</text>
+            <text class="err" style="animation-delay:1.4s" x="410" y="262" fill="#E5484D">v7_FINAL</text>
+            <g><rect x="436" y="318" width="64" height="12" rx="2" fill="#EAE7DC"/><rect x="440" y="306" width="62" height="12" rx="2" fill="#d8d4c6"/><rect x="434" y="294" width="64" height="12" rx="2" fill="#EAE7DC"/><rect x="438" y="282" width="62" height="12" rx="2" fill="#d8d4c6"/></g>
+          </g>
+
+          <!-- transformation burst -->
+          <circle class="burst" style="--dx:70px;--dy:0px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:87px;--dy:50px" cx="280" cy="232" r="3" fill="#22D3B8"/><circle class="burst" style="--dx:65px;--dy:113px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:0px;--dy:70px" cx="280" cy="232" r="3" fill="#22D3B8"/><circle class="burst" style="--dx:-50px;--dy:87px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:-113px;--dy:65px" cx="280" cy="232" r="3" fill="#22D3B8"/><circle class="burst" style="--dx:-70px;--dy:0px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:-87px;--dy:-50px" cx="280" cy="232" r="3" fill="#22D3B8"/><circle class="burst" style="--dx:-65px;--dy:-113px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:-0px;--dy:-70px" cx="280" cy="232" r="3" fill="#22D3B8"/><circle class="burst" style="--dx:50px;--dy:-87px" cx="280" cy="232" r="2" fill="#22D3B8"/><circle class="burst" style="--dx:113px;--dy:-65px" cx="280" cy="232" r="3" fill="#22D3B8"/>
+
+          <!-- phase C: holographic automation -->
+          <g class="phC">
+            <path id="c1" class="hl" d="M139 82 C165 84 170 60 190 56"/>
+            <path id="c2" class="hl" d="M340 56 L385 56"/>
+            <path id="c3" class="hl" d="M460 86 L460 100"/>
+            <path id="c4" class="hl" d="M280 168 L270 98"/>
+            <path id="c5" class="hl" d="M178 190 C160 170 150 160 139 152"/>
+            <path id="c6" class="hl" d="M390 200 C400 190 420 190 428 190"/>
+            <circle class="pulse" r="3"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#c1"/></animateMotion></circle>
+            <circle class="pulse" r="3"><animateMotion dur="1.4s" begin=".3s" repeatCount="indefinite"><mpath href="#c2"/></animateMotion></circle>
+            <circle class="pulse" r="3"><animateMotion dur="1.6s" begin=".6s" repeatCount="indefinite"><mpath href="#c4"/></animateMotion></circle>
+            <circle class="pulse" r="3"><animateMotion dur="1.7s" begin=".2s" repeatCount="indefinite"><mpath href="#c5"/></animateMotion></circle>
+            <circle class="pulse" r="3"><animateMotion dur="1.2s" begin=".5s" repeatCount="indefinite"><mpath href="#c3"/></animateMotion></circle>
+            <g class="env"><rect x="-7" y="-5" width="14" height="10" rx="2" fill="#0E1526" stroke="#F2F0E8" stroke-width="1"/><path d="M-7 -5 L0 1 L7 -5" fill="none" stroke="#F2F0E8" stroke-width="1"/><animateMotion dur="2.4s" repeatCount="indefinite" path="M300 168 Q360 90 392 62"/></g>
+          </g>
+          <!-- holo panels (each fades+flies out of the monitor) -->
+          <g transform="translate(14,40)"><g class="holo" style="--tx:204px;--ty:160px;animation-delay:0s">
+      <rect width="125" height="64" rx="9" fill="#0E1526" fill-opacity=".92" stroke="#22D3B8" stroke-opacity=".7"/>
+      <g transform="translate(14,14)" fill="none" stroke="#22D3B8" stroke-width="1.4"><ellipse cx="14" cy="6" rx="12" ry="4.5"/><path d="M2 6v10c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5V6M2 11c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5"/></g>
+<text x="48" y="24" class="pt">DATA MART</text><text x="48" y="37" class="ps">SQL · 500K rows</text><rect x="14" y="48" width="97" height="4" rx="2" fill="#22D3B8" fill-opacity=".18"/><rect class="load" x="14" y="48" width="97" height="4" rx="2" fill="#22D3B8"/></g></g>
+          <g transform="translate(14,112)"><g class="holo" style="--tx:204px;--ty:84px;animation-delay:0.12s">
+      <rect width="125" height="72" rx="9" fill="#0E1526" fill-opacity=".92" stroke="#22D3B8" stroke-opacity=".7"/>
+      <g class="gear"><path d="M48.0,36.0 L53.6,40.3 L52.3,44.4 L45.3,44.9 L43.3,47.3 L44.2,54.3 L40.4,56.3 L35.1,51.7 L32.0,52.0 L27.7,57.6 L23.6,56.3 L23.1,49.3 L20.7,47.3 L13.7,48.2 L11.7,44.4 L16.3,39.1 L16.0,36.0 L10.4,31.7 L11.7,27.6 L18.7,27.1 L20.7,24.7 L19.8,17.7 L23.6,15.7 L28.9,20.3 L32.0,20.0 L36.3,14.4 L40.4,15.7 L40.9,22.7 L43.3,24.7 L50.3,23.8 L52.3,27.6 L47.7,32.9Z" fill="none" stroke="#22D3B8" stroke-width="1.5"/><circle cx="32" cy="36" r="6" fill="none" stroke="#22D3B8" stroke-width="1.5"/></g>
+<g class="gear rev"><path d="M76.0,52.0 L79.5,55.6 L78.1,59.0 L73.1,59.1 L71.0,60.7 L69.6,65.5 L66.0,66.0 L63.4,61.7 L61.0,60.7 L56.1,61.9 L53.9,59.0 L56.3,54.6 L56.0,52.0 L52.5,48.4 L53.9,45.0 L58.9,44.9 L61.0,43.3 L62.4,38.5 L66.0,38.0 L68.6,42.3 L71.0,43.3 L75.9,42.1 L78.1,45.0 L75.7,49.4Z" fill="none" stroke="#0EA5A0" stroke-width="1.4"/></g>
+<text x="88" y="24" class="pt">ALTERYX</text><text x="88" y="36" class="ps">Python</text><text x="84" y="64" class="ps" fill="#22D3B8">● running</text></g></g>
+          <g transform="translate(190,14)"><g class="holo" style="--tx:15px;--ty:180px;animation-delay:0.06s">
+      <rect width="150" height="76" rx="9" fill="#0E1526" fill-opacity=".92" stroke="#22D3B8" stroke-opacity=".7"/>
+      <text x="14" y="20" class="pt">CLEAN · VALIDATE · DEDUPE</text>
+<g class="ps"><text x="14" y="38"><tspan fill="#22D3B8">✓</tspan> nulls removed</text><text x="14" y="51"><tspan fill="#22D3B8">✓</tspan> duplicates dropped</text><text x="14" y="64"><tspan fill="#22D3B8">✓</tspan> accuracy 100%</text></g></g></g>
+          <g transform="translate(385,24)"><g class="holo" style="--tx:-180px;--ty:177px;animation-delay:0.18s">
+      <rect width="150" height="62" rx="9" fill="#0E1526" fill-opacity=".92" stroke="#22D3B8" stroke-opacity=".7"/>
+      <g transform="translate(14,14)" fill="none" stroke="#22D3B8" stroke-width="1.4"><rect width="30" height="20" rx="3"/><path d="M1 2l14 11L29 2"/></g>
+<text x="54" y="24" class="pt">AUTO-DISPATCH</text><text x="54" y="38" class="ps">Mail Node <tspan fill="#22D3B8">✓ sent</tspan></text></g></g>
+          <g transform="translate(395,100)"><g class="holo" style="--tx:-188px;--ty:85px;animation-delay:0.24s">
+      <rect width="145" height="94" rx="9" fill="#0E1526" fill-opacity=".92" stroke="#22D3B8" stroke-opacity=".7"/>
+      <text x="12" y="16" class="pt">LIVE DASHBOARD</text><rect class="bar" style="animation-delay:0.0s" x="14" y="54" width="13" height="24" rx="2" fill="#22D3B8" opacity="0.55"/><rect class="bar" style="animation-delay:0.3s" x="35" y="38" width="13" height="40" rx="2" fill="#22D3B8" opacity="0.65"/><rect class="bar" style="animation-delay:0.6s" x="56" y="48" width="13" height="30" rx="2" fill="#22D3B8" opacity="0.75"/><rect class="bar" style="animation-delay:0.8999999999999999s" x="77" y="26" width="13" height="52" rx="2" fill="#22D3B8" opacity="0.85"/><rect class="bar" style="animation-delay:1.2s" x="98" y="34" width="13" height="44" rx="2" fill="#22D3B8" opacity="0.95"/><path d="M14 40 L40 30 L60 36 L84 18 L116 12" fill="none" stroke="#F2F0E8" stroke-opacity=".7" stroke-width="1.2" stroke-dasharray="3 3"/></g></g>
+
+          <!-- sparkles -->
+          <circle class="tw" cx="500" cy="150" r="1.6" fill="#22D3B8"/><circle class="tw t2" cx="60" cy="300" r="1.4" fill="#22D3B8"/><circle class="tw t3" cx="330" cy="130" r="1.4" fill="#F2F0E8"/>
         </svg>
-        <div class="node n1"><div class="n-icon">01 · INPUT</div><div class="n-title">Data Mart</div><div class="n-sub">SQL / Oracle DB</div></div>
-        <div class="node n2"><div class="n-icon">02 · BLEND</div><div class="n-title">Join &amp; Clean</div><div class="n-sub">Alteryx Designer</div></div>
-        <div class="node n3"><div class="n-icon">03 · SHAPE</div><div class="n-title">Summarize</div><div class="n-sub">Python · Pandas</div></div>
-        <div class="node n4"><div class="n-icon">04 · REPORT</div><div class="n-title">Auto-Dispatch</div><div class="n-sub">Mail Node · Power Automate</div></div>
-        <div class="node n5"><div class="n-icon">05 · OUTPUT</div><div class="n-title">Live Dashboard</div><div class="n-sub">Power BI · Tableau</div></div>
       </div>
     </div>
   </div>
@@ -832,24 +1136,58 @@
     </div>
 
     <div class="proj-grid">
-      <div class="proj-card">
-        <div class="proj-metric"><span class="from">30–60 min</span><span class="arrow">→</span><span class="to">&lt;1 min</span></div>
-        <h3>CoE Automated Reporting System</h3>
-        <div class="proj-tech">Alteryx Designer · Mail Node · Excel</div>
-        <p>Pulls directly from the Data Mart, cleans and validates records, and consolidates Daily/Weekly/Monthly reports into a dynamically-named Excel workbook — then emails them out automatically. Delivery accuracy rose from 98% to 100%; total D-W-M reporting effort dropped over 95%.</p>
-      </div>
-      <div class="proj-card">
-        <div class="proj-metric"><span class="from">manual watch</span><span class="arrow">→</span><span class="to">rule-based</span></div>
-        <h3>Automated EDC Claims Notification System</h3>
-        <div class="proj-tech">Power Automate · Excel · SharePoint</div>
-        <p>Triggers conditional email alerts when EDC dates change across Thailand, India, and South Africa — a state-tracking mechanism compares current vs. previous values so alerts only fire when all three countries update, eliminating false notifications and manual monitoring.</p>
-      </div>
-      <div class="proj-card">
-        <div class="proj-metric"><span class="from">7 min/doc</span><span class="arrow">→</span><span class="to">1 min/doc</span></div>
-        <h3>BOE &amp; Invoice Validation Automation</h3>
-        <div class="proj-tech">Python · PDF Extraction · Tkinter</div>
-        <p>A desktop app that extracts invoice number, date, amount, weight, HSN, price, and package details from BOE and Invoice PDFs, validates every field, and emails a comparison report — pushing accuracy from 99.7% to 100% and retiring the line-by-line manual check entirely.</p>
-      </div>
+      <article class="proj-card">
+        <div class="proj-visual">
+          <span class="pv-badge">01</span><span class="pv-date">JUL – SEP 2026</span>
+          <div class="pv-before"><span class="pv-label">Before · manual</span><span class="pv-big">~1 day</span><span class="pv-sub">monthly KPI report prep</span></div>
+          <div class="pv-swap">→</div>
+          <div class="pv-after"><div class="pv-term"><span class="ok">✓</span> datamart pull<br><span class="ok">✓</span> email-scraped reports<br><span class="ok">✓</span> MIS → KPI workbook<br><span class="ok">✓</span> charts relinked<br><span class="ok">✓</span> deck sent via Outlook</div><span class="pv-label">After · automated</span><span class="pv-big">&lt;10 min</span><span class="pv-sub">zero manual copy-paste</span></div>
+        </div>
+        <div class="proj-body">
+          <h3>Automated Monthly KPI Reporting</h3>
+          <div class="proj-tech"><span>Python</span><span>xlwings</span><span>pywin32</span><span>Excel</span><span>PowerPoint</span></div>
+          <ul><li><b>End-to-end pipeline</b> generating and distributing the monthly IND EDC KPI report, from raw data to final presentation, with no manual copy-paste.</li><li>Automates collection from the datamart, email-scraped reports (container utilization, NPM) and shared folders, then loads MIS tables into the KPI workbook with <b>automatic month detection, year-end rollover</b> and rolling 3- and 4-month chart ranges.</li><li>Relinks all PowerPoint charts to the updated workbook and emails the final deck to stakeholders via Outlook.</li><li><b>Fails safely:</b> pre-run file, sheet and range validation, run logging, PowerPoint start-up retries and save-on-success only.</li></ul>
+        </div>
+      </article>
+      <article class="proj-card">
+        <div class="proj-visual">
+          <span class="pv-badge">02</span><span class="pv-date">FEB – JUN 2026</span>
+          <div class="pv-before"><span class="pv-label">Before · manual</span><span class="pv-big">30–60 min</span><span class="pv-sub">per Daily / Weekly / Monthly cycle</span></div>
+          <div class="pv-swap">→</div>
+          <div class="pv-after"><div class="pv-term"><span class="ok">✓</span> data mart pull<br><span class="ok">✓</span> clean · validate · dedupe<br><span class="ok">✓</span> one Excel workbook<br><span class="ok">✓</span> mail node delivery</div><span class="pv-label">After · automated</span><span class="pv-big">&lt;1 min</span><span class="pv-sub">95% less reporting effort</span></div>
+        </div>
+        <div class="proj-body">
+          <h3>CoE Automated Reporting System</h3>
+          <div class="proj-tech"><span>Alteryx Designer</span><span>Mail Node</span><span>Excel</span></div>
+          <ul><li>Replaced a manual Daily/Weekly/Monthly reporting process with an automated pipeline completing in <b>under 1 minute</b>, cutting reporting effort by <b>95%</b>.</li><li>Pulls from the Data Mart with cleaning, validation and deduplication, consolidates reports into one Excel workbook and automates delivery, raising accuracy from <b>98% to 100%</b>.</li></ul>
+        </div>
+      </article>
+      <article class="proj-card">
+        <div class="proj-visual">
+          <span class="pv-badge">03</span><span class="pv-date">NOV 2025 – JAN 2026</span>
+          <div class="pv-before"><span class="pv-label">Before · manual</span><span class="pv-big">manual watch</span><span class="pv-sub">tracking EDC date changes</span></div>
+          <div class="pv-swap">→</div>
+          <div class="pv-after"><div class="pv-term"><span class="ok">✓</span> Thailand date<br><span class="ok">✓</span> India date<br><span class="ok">✓</span> South Africa date<br><span class="ok">✓</span> all 3 confirmed → send</div><span class="pv-label">After · automated</span><span class="pv-big">rule-based</span><span class="pv-sub">alerts only when all 3 confirm</span></div>
+        </div>
+        <div class="proj-body">
+          <h3>Automated EDC Claims Notification System</h3>
+          <div class="proj-tech"><span>Power Automate</span><span>Excel</span><span>SharePoint</span></div>
+          <ul><li>Power Automate workflow sending conditional email alerts on EDC date changes across <b>Thailand, India and South Africa</b>, firing only once all 3 country dates are confirmed.</li><li>State-tracking mechanism using SharePoint/Excel helper tables compares current vs. previous values, <b>eliminating manual monitoring</b> and unnecessary notifications.</li></ul>
+        </div>
+      </article>
+      <article class="proj-card">
+        <div class="proj-visual">
+          <span class="pv-badge">04</span><span class="pv-date">2024 – 2025</span>
+          <div class="pv-before"><span class="pv-label">Before · manual</span><span class="pv-big">7 min</span><span class="pv-sub">per BOE / Invoice document</span></div>
+          <div class="pv-swap">→</div>
+          <div class="pv-after"><div class="pv-term"><span class="ok">✓</span> extract invoice no., date<br><span class="ok">✓</span> amount · weight · HSN<br><span class="ok">✓</span> price · quantity<br><span class="ok">✓</span> comparison report</div><span class="pv-label">After · automated</span><span class="pv-big">1 min</span><span class="pv-sub">86% faster · 99.7% → 100%</span></div>
+        </div>
+        <div class="proj-body">
+          <h3>BOE &amp; Invoice Validation Automation</h3>
+          <div class="proj-tech"><span>Python</span><span>PDF Extraction</span><span>Excel Automation</span><span>Tkinter</span></div>
+          <ul><li>Python desktop app that extracts and validates key fields (invoice number, date, amount, weight, HSN, price, quantity) from BOE and Invoice PDFs, cutting validation from <b>7 to 1 minute</b> per document (86% faster).</li><li>Replaced manual Excel/email workflows with an automated comparison report, improving accuracy from <b>99.7% to 100%</b>; deployed for daily team use.</li></ul>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -885,21 +1223,20 @@
       </div>
     </div>
 
-    <div class="iso-chart">
-      <div class="iso-plane">
-        <div class="iso-bar" style="--h:140px;">
-          <div class="iso-front"></div><div class="iso-side"></div><div class="iso-top"></div>
-        </div>
-        <div class="iso-bar" style="--h:192px;">
-          <div class="iso-front iso-teal"></div><div class="iso-side iso-teal"></div><div class="iso-top iso-teal"></div>
-        </div>
-        <div class="iso-bar" style="--h:62px;">
-          <div class="iso-front"></div><div class="iso-side"></div><div class="iso-top"></div>
-        </div>
-        <div class="iso-bar" style="--h:176px;">
-          <div class="iso-front iso-teal"></div><div class="iso-side iso-teal"></div><div class="iso-top iso-teal"></div>
-        </div>
+    <div class="ai-core" id="aiCore" tabindex="0" role="button" aria-label="Activate the AI automation core. Click or press Enter.">
+      <canvas id="aiCanvas"></canvas>
+      <div class="ai-flash"></div>
+      <span class="ai-corner tl"></span><span class="ai-corner tr"></span><span class="ai-corner bl"></span><span class="ai-corner br"></span>
+      <div class="ai-hud ai-title"><b id="aiName">AUTOMATION</b><span class="ai-status"><i></i><span id="aiState">STANDBY</span></span><br><span class="dim">Automation core // v3.0</span></div>
+      <div class="ai-hud ai-stats" id="aiStats">
+        <div><span>0</span><em>Report cycle · D/W/M</em></div>
+        <div><span>0</span><em>Validation per document</em></div>
+        <div><span>0</span><em>Monthly KPI report</em></div>
+        <div><span>0</span><em>Report accuracy</em></div>
       </div>
+      <div class="ai-hud ai-log" id="aiLog"></div>
+      <div class="ai-hud ai-hint">▸ Click to activate ◂</div>
+      <div class="ai-modes"><button type="button" data-mode="manual">Manual</button><button type="button" data-mode="auto" class="on">Automation</button></div>
     </div>
 
     <div class="ach-grid">
@@ -1021,13 +1358,13 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if(!reduceMotion && outer){
-    let baseX = 18, baseY = -22;
+    let baseX = 3, baseY = -6;
     outer.addEventListener('mousemove', (e) => {
       const rect = outer.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width - 0.5;
       const py = (e.clientY - rect.top) / rect.height - 0.5;
-      const rx = baseX - py * 16;
-      const ry = baseY + px * 20;
+      const rx = baseX - py * 8;
+      const ry = baseY + px * 10;
       scene.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
     });
     outer.addEventListener('mouseleave', () => {
@@ -1048,5 +1385,208 @@
   }
 </script>
 
+
+<script>
+(function(){
+  const core=document.getElementById('aiCore'); if(!core) return;
+  const cv=document.getElementById('aiCanvas'), ctx=cv.getContext('2d');
+  const logEl=document.getElementById('aiLog'), stateEl=document.getElementById('aiState'), nameEl=document.getElementById('aiName');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COLORS={auto:'34,211,184', manual:'255,70,70'};
+  let mode='auto', col=COLORS.auto, W=0,H=0,dpr=1;
+  let energy=0.25, target=0.25, mx=0, my=0, visible=true, last=performance.now(), t0=last, live=false;
+  const shocks=[], parts=[];
+  const NODES=['ALTERYX','PYTHON','SQL','POWER BI','AUTOMATE','POWER AUTOMATE'];
+
+  function resize(){
+    const r=core.getBoundingClientRect(); dpr=Math.min(window.devicePixelRatio||1,2);
+    W=r.width; H=r.height; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  new ResizeObserver(resize).observe(core); resize();
+
+  function spawn(p,burst){
+    p.a=Math.random()*Math.PI*2; p.r=burst?20+Math.random()*30:40+Math.random()*260;
+    p.s=(Math.random()*.4+.1)*(Math.random()<.5?-1:1); p.vr=burst?120+Math.random()*320:6+Math.random()*10;
+    p.z=Math.random()*1.5+.5; p.l=Math.random()*.6+.4; return p;
+  }
+  for(let i=0;i<110;i++) parts.push(spawn({},false));
+
+  const C=a=>`rgba(${col},${a})`;
+  const arc=(x,y,r,a0,a1)=>{ctx.beginPath();ctx.arc(x,y,r,a0,a1);ctx.stroke();};
+
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(!visible) return;
+    const dt=Math.min((now-last)/1000,.05); last=now; const t=(now-t0)/1000;
+    energy+=(target-energy)*Math.min(dt*2.2,1); if(target>.3) target=Math.max(.3,target-dt*.18);
+    draw(t,dt);
+  }
+  function draw(t,dt){
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2+mx*14, cy=H/2-6+my*10, R=Math.min(W*.5,H)*.265, e=energy, sp=.6+e*3.4;
+    ctx.globalCompositeOperation='lighter';
+
+    // ambient glow
+    let g=ctx.createRadialGradient(cx,cy,0,cx,cy,R*2.6);
+    g.addColorStop(0,C(.20+e*.35)); g.addColorStop(.45,C(.06+e*.08)); g.addColorStop(1,C(0));
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+    // radar sweep
+    if(ctx.createConicGradient){
+      const cg=ctx.createConicGradient(t*1.3*sp,cx,cy);
+      cg.addColorStop(0,C(.0)); cg.addColorStop(.82,C(0)); cg.addColorStop(1,C(.28+e*.3));
+      ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx,cy,R*1.5,0,Math.PI*2); ctx.fill();
+    }
+
+    // particles
+    for(const p of parts){
+      p.a+=p.s*dt*(1+e*2); p.r+=p.vr*dt; p.vr+=((6+e*20)-p.vr)*Math.min(dt*1.4,1);
+      if(p.r>R*3.1){ spawn(p,false); p.r=30+Math.random()*40; }
+      const x=cx+Math.cos(p.a)*p.r*1.25, y=cy+Math.sin(p.a)*p.r*.8;
+      ctx.fillStyle=C(Math.min(1,p.l*(1-p.r/(R*3.4))*(.8+e)));
+      ctx.fillRect(x,y,p.z,p.z);
+    }
+
+    ctx.lineCap='butt';
+    // ring D - outer thin + orbit nodes
+    ctx.lineWidth=1; ctx.strokeStyle=C(.22); arc(cx,cy,R*1.78,0,Math.PI*2);
+    ctx.setLineDash([2,6]); ctx.strokeStyle=C(.3); arc(cx,cy,R*1.95,0,Math.PI*2); ctx.setLineDash([]);
+    NODES.forEach((n,i)=>{
+      const a=t*.22*sp*(i%2?-1:1)+i*(Math.PI*2/NODES.length), rr=R*(1.78+(i%2)*.17);
+      const x=cx+Math.cos(a)*rr, y=cy+Math.sin(a)*rr;
+      ctx.strokeStyle=C(.12+e*.45); ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*R*.8,cy+Math.sin(a)*R*.8); ctx.lineTo(x,y); ctx.stroke();
+      ctx.fillStyle=C(.95); ctx.fillRect(x-3,y-3,6,6);
+      ctx.strokeStyle=C(.6); ctx.strokeRect(x-7,y-7,14,14);
+      ctx.fillStyle=C(.9); ctx.font='10px JetBrains Mono, monospace'; ctx.textAlign=Math.cos(a)>=0?'left':'right';
+      ctx.fillText(n,x+(Math.cos(a)>=0?12:-12),y+3);
+    });
+
+    // ring C - thick arcs
+    ctx.shadowColor=C(1); ctx.shadowBlur=12+e*18; ctx.lineWidth=5;
+    [[1.46,.5,1.2],[1.46,-.35,.9],[1.55,.8,.6]].forEach(([k,v,len],i)=>{
+      const a=t*v*sp+i*2.1; ctx.strokeStyle=C(.75); arc(cx,cy,R*k+(i===2?5:0),a,a+len);
+    });
+    ctx.shadowBlur=0;
+
+    // ring B - ticks
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(-t*.25*sp);
+    for(let i=0;i<120;i++){
+      const a=i/120*Math.PI*2, big=i%10===0, l=big?13:5;
+      ctx.strokeStyle=C(big?.9:.4); ctx.lineWidth=big?1.6:1;
+      ctx.beginPath(); ctx.moveTo(Math.cos(a)*R*1.25,Math.sin(a)*R*1.25); ctx.lineTo(Math.cos(a)*(R*1.25+l),Math.sin(a)*(R*1.25+l)); ctx.stroke();
+    } ctx.restore();
+
+    // ring A - dashed segments
+    ctx.lineWidth=3; ctx.strokeStyle=C(.8);
+    for(let i=0;i<6;i++){ const a=t*.6*sp+i*Math.PI/3; arc(cx,cy,R*1.06,a,a+Math.PI/3*.62); }
+
+    // voice waveform ring
+    const N=96;
+    for(let i=0;i<N;i++){
+      const a=i/N*Math.PI*2+t*.2;
+      const amp=(Math.sin(i*.55+t*3.2)+Math.sin(i*.23-t*2.1)+2)/4;
+      const l=3+amp*(6+e*34)+ (Math.sin(i*1.7+t*9)*e*5);
+      ctx.strokeStyle=C(.55+amp*.4); ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*R*.82,cy+Math.sin(a)*R*.82); ctx.lineTo(cx+Math.cos(a)*(R*.82+l),cy+Math.sin(a)*(R*.82+l)); ctx.stroke();
+    }
+
+    // core coil
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(t*.5*sp);
+    for(let i=0;i<10;i++){
+      ctx.rotate(Math.PI*2/10); ctx.fillStyle=C(.55+e*.4);
+      ctx.fillRect(R*.5,-4,R*.2,8);
+    } ctx.restore();
+    ctx.lineWidth=2; ctx.strokeStyle=C(.9); arc(cx,cy,R*.46,0,Math.PI*2);
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(-t*.8*sp); ctx.strokeStyle=C(.8); ctx.lineWidth=1.6;
+    ctx.beginPath(); for(let i=0;i<3;i++){ const a=i*Math.PI*2/3; ctx.lineTo(Math.cos(a)*R*.38,Math.sin(a)*R*.38);} ctx.closePath(); ctx.stroke(); ctx.restore();
+    const pulse=.75+Math.sin(t*3)*.15+e*.5;
+    g=ctx.createRadialGradient(cx,cy,0,cx,cy,R*.42);
+    g.addColorStop(0,`rgba(255,255,255,${Math.min(1,.7*pulse)})`); g.addColorStop(.35,C(.75*pulse)); g.addColorStop(1,C(0));
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,R*.42,0,Math.PI*2); ctx.fill();
+
+    // shockwaves
+    for(let i=shocks.length-1;i>=0;i--){
+      const s=shocks[i]; s.r+=dt*(520+s.k*160); s.a-=dt*.75;
+      if(s.a<=0){ shocks.splice(i,1); continue; }
+      ctx.lineWidth=3+s.k*2; ctx.strokeStyle=C(s.a); ctx.shadowColor=C(1); ctx.shadowBlur=22;
+      arc(cx,cy,s.r,0,Math.PI*2); ctx.shadowBlur=0;
+    }
+    ctx.globalCompositeOperation='source-over';
+  }
+
+  // ---- activation ----
+  const STATS={
+    manual:[{pre:'',n:30,suf:'–60 min'},{pre:'',n:7,suf:' min'},{pre:'~',n:1,suf:' day'},{pre:'',n:98,suf:'%'}],
+    auto:  [{pre:'<',n:1,suf:' min'},{pre:'',n:1,suf:' min'},{pre:'<',n:10,suf:' min'},{pre:'',n:100,suf:'%'}]
+  };
+  const NAMES={manual:'MANUAL PROCESS',auto:'AUTOMATION'};
+  const LINES={
+    auto:[
+      ['> automation core loading','','dim'],
+      ['> data mart link ..... ','SYNCED'],
+      ['> report cycle ....... ','< 1 MIN'],
+      ['> reporting effort ... ','-95%'],
+      ['> accuracy ........... ','100%'],
+      ['> all systems nominal. no copy-paste needed.','','']
+    ],
+    manual:[
+      ['> manual process loaded','','dim'],
+      ['> copy · paste · repeat ... ','ACTIVE'],
+      ['> report cycle ....... ','30–60 MIN'],
+      ['> validation ......... ','7 MIN / DOC'],
+      ['> KPI report prep .... ','~1 DAY'],
+      ['> switch to automation to see the difference.','','']
+    ]
+  };
+  let timers=[];
+  function activate(){
+    timers.forEach(clearTimeout); timers=[];
+    live=true; core.classList.add('live');
+    core.classList.remove('fire'); void core.offsetWidth; if(!reduce) core.classList.add('fire');
+    target=mode==='manual'?.55:1; energy=Math.max(energy,mode==='manual'?.5:.7);
+    shocks.push({r:10,a:1,k:0}); setTimeout(()=>shocks.push({r:10,a:.8,k:1}),140); setTimeout(()=>shocks.push({r:10,a:.6,k:2}),300);
+    parts.forEach(p=>spawn(p,true));
+    stateEl.textContent='BOOTING…'; logEl.innerHTML='';
+    LINES[mode].forEach((l,i)=>{
+      timers.push(setTimeout(()=>{
+        const p=document.createElement('p'); p.textContent=l[0]; 
+        if(l[1]){ const ok=document.createElement('span'); ok.className='ok'; ok.textContent=l[1]; p.appendChild(ok); }
+        logEl.appendChild(p); while(logEl.children.length>6) logEl.removeChild(logEl.firstChild);
+      },350+i*430));
+    });
+    timers.push(setTimeout(()=>{ stateEl.textContent=mode==='manual'?'RUNNING MANUALLY':'ONLINE'; },350+LINES[mode].length*430));
+    countUp();
+  }
+  const statEls=[...core.querySelectorAll('#aiStats span')];
+  function showStats(final){
+    const d=STATS[mode];
+    statEls.forEach((el,i)=>{ el.textContent=final?d[i].pre+d[i].n+d[i].suf:'0'; });
+  }
+  function countUp(){
+    const d=STATS[mode], t0=performance.now(), m=mode;
+    (function step(n){
+      if(m!==mode) return;
+      const k=Math.min((n-t0)/1600,1), ease=1-Math.pow(1-k,3);
+      statEls.forEach((el,i)=>{ el.textContent=d[i].pre+Math.round(d[i].n*ease)+(k>.98?d[i].suf:''); });
+      if(k<1) requestAnimationFrame(step);
+    })(t0);
+  }
+  function setMode(m){
+    mode=m; col=COLORS[m]; core.classList.toggle('manual',m==='manual');
+    core.querySelectorAll('.ai-modes button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
+    nameEl.textContent=NAMES[m];
+    showStats(live);
+  }
+  core.addEventListener('click',e=>{ if(e.target.closest('.ai-modes')) return; activate(); });
+  core.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); } });
+  core.querySelectorAll('.ai-modes button').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); setMode(b.dataset.mode); activate(); }));
+  core.addEventListener('mousemove',e=>{ const r=core.getBoundingClientRect(); mx=(e.clientX-r.left)/r.width-.5; my=(e.clientY-r.top)/r.height-.5; });
+  core.addEventListener('mouseleave',()=>{mx=0;my=0;});
+  new IntersectionObserver(en=>{ visible=en[0].isIntersecting; last=performance.now(); },{threshold:.05}).observe(core);
+
+  if(reduce){ draw(2,0); showStats(true); }
+  else requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
